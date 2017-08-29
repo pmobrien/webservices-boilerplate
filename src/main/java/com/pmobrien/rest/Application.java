@@ -2,7 +2,6 @@ package com.pmobrien.rest;
 
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
 import com.pmobrien.rest.services.impl.HelloWorldService;
-import java.util.Optional;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
