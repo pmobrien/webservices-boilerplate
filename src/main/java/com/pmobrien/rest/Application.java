@@ -2,6 +2,7 @@ package com.pmobrien.rest;
 
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
 import com.pmobrien.rest.services.impl.HelloWorldService;
+import com.pmobrien.rest.services.impl.OmniUsersService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -17,6 +18,7 @@ public class Application {
         new ServletHolder(
             new ServletContainer(
                 new ResourceConfig()
+                    .register(OmniUsersService.class)
                     .register(HelloWorldService.class)
                     .register(UncaughtExceptionMapper.class)
             )

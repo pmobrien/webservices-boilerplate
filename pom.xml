@@ -17,6 +17,7 @@
         
         <jersey.version>2.7</jersey.version>
         <jetty.version>9.2.3.v20140905</jetty.version>
+        <neo4j-ogm.version>2.1.4</neo4j-ogm.version>
     </properties>
     
     <dependencies>
@@ -47,6 +48,23 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
+        </dependency>
+        
+        <!-- neo4j -->
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-core</artifactId>
+            <version>${neo4j-ogm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-bolt-driver</artifactId>
+            <version>${neo4j-ogm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cleo.api</groupId>
+            <artifactId>GraphPOJO</artifactId>
+            <version>5.4.2-SNAPSHOT</version>
         </dependency>
         
         <!-- other -->
