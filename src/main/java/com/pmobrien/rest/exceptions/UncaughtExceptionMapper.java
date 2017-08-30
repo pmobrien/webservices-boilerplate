@@ -1,6 +1,8 @@
 package com.pmobrien.rest.exceptions;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -9,6 +11,9 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class UncaughtExceptionMapper implements ExceptionMapper<Throwable> {
 
+  @Context
+  private HttpServletRequest request;
+  
   /**
    * If it's a WebApplicationException (or any child class of), convert it to a JSON error message and retain the
    * original error code. Otherwise, return a 500.
@@ -19,6 +24,8 @@ public class UncaughtExceptionMapper implements ExceptionMapper<Throwable> {
    */
   @Override
   public Response toResponse(Throwable t) {
+    System.out.println(String.format("Exception on request to %s %s.", request.getMethod(), request.getRequestURI()));
+    
     t.printStackTrace(System.out);
     
     try {

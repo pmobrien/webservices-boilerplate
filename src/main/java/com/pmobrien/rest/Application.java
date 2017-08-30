@@ -22,6 +22,7 @@ public class Application {
                     .register(OmniUsersService.class)
                     .register(HelloWorldService.class)
                     .register(DefaultObjectMapper.class)
+                    .register(RequestLoggerFilter.class)
                     .register(UncaughtExceptionMapper.class)
             )
         ),
