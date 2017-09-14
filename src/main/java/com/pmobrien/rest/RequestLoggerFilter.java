@@ -1,5 +1,6 @@
 package com.pmobrien.rest;
 
+import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -12,8 +13,13 @@ public class RequestLoggerFilter implements ContainerRequestFilter {
   private HttpServletRequest request;
   
   @Override
-  public void filter(ContainerRequestContext context) throws IOException {    
+  public void filter(ContainerRequestContext context) throws IOException {
+    String output = String.format("  %s %s", request.getMethod(), request.getRequestURL());
+    if(!Strings.isNullOrEmpty(request.getQueryString())) {
+      output += String.format("?%s", request.getQueryString());
+    }
+    
     System.out.println("Incoming Request:");
-    System.out.println(String.format("  %s %s", request.getMethod(), request.getRequestURL()));
+    System.out.println(output);
   }
 }
