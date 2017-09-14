@@ -15,7 +15,7 @@ public class Application {
   public static void main(String[] args) throws Exception {
     Server server = new Server(port());
     
-    new ServletContextHandler(server, "/api").addServlet(
+    new ServletContextHandler(server, "/graphdb").addServlet(
         new ServletHolder(
             new ServletContainer(
                 new ResourceConfig()
