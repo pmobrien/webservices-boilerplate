@@ -2,6 +2,7 @@ package com.pmobrien.rest.services;
 
 import com.cleo.graph.pojo.OmniUser;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,4 +22,8 @@ public interface IOmniUsersService {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public OmniUser post(OmniUser user);
+  
+  @DELETE
+  @Path("/{id}")
+  public void delete(@PathParam("id") String uuid);
 }

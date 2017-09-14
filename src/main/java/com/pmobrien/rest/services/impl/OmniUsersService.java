@@ -22,9 +22,16 @@ public class OmniUsersService implements IOmniUsersService {
         .setVlId(user.getVlId());
     
     NeoConnector.getInstance().sessionOperation(session ->
-      session.save(save)
+        session.save(save)
     );
     
     return get(save.getUuid().toString());
+  }
+
+  @Override
+  public void delete(String uuid) {
+    NeoConnector.getInstance().sessionOperation(session ->
+        session.delete(session.load(OmniUser.class, UUID.fromString(uuid)))
+    );
   }
 }
