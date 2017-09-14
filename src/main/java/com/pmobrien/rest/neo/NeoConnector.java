@@ -1,6 +1,7 @@
 package com.pmobrien.rest.neo;
 
 import com.google.common.base.Suppliers;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import org.neo4j.ogm.config.Configuration;
@@ -21,7 +22,13 @@ public class NeoConnector {
     return INSTANCE;
   }
   
-  public <T> T sessionOperation(Function<Session, T> function) {
+  public void sessionOperation(Consumer<Session> function) {
+    Session session = SESSION_FACTORY.get().openSession();
+    function.accept(session);
+    session.clear();
+  }
+  
+  public <T> T returningSessionOperation(Function<Session, T> function) {
     Session session = SESSION_FACTORY.get().openSession();
     T result = function.apply(session);
     
