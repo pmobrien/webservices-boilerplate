@@ -1,7 +1,6 @@
 package com.pmobrien.rest.services;
 
-import com.cleo.api.graph.pojo.OmniUser;
-import java.util.UUID;
+import com.cleo.graph.pojo.OmniUser;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;

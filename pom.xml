@@ -15,8 +15,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         
+        <cleo.version>5.4.2-SNAPSHOT</cleo.version>
         <jersey.version>2.7</jersey.version>
         <jetty.version>9.2.3.v20140905</jetty.version>
+        <neo4j.version>3.2.2</neo4j.version>
         <neo4j-ogm.version>2.1.4</neo4j-ogm.version>
     </properties>
     
@@ -62,9 +64,9 @@
             <version>${neo4j-ogm.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.cleo.api</groupId>
+            <groupId>com.cleo.base</groupId>
             <artifactId>GraphPOJO</artifactId>
-            <version>5.4.2-SNAPSHOT</version>
+            <version>${cleo.version}</version>
         </dependency>
         
         <!-- other -->
@@ -94,7 +96,10 @@
     </dependencies>
     
     <build>
+        <defaultGoal>clean install</defaultGoal>
+        
         <finalName>webservices</finalName>
+        
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

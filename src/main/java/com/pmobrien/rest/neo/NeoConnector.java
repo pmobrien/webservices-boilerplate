@@ -38,7 +38,7 @@ public class NeoConnector {
     
     configuration.driverConfiguration().setCredentials("neo4j", "cleo");
 
-    return new SessionFactory(configuration, "com.cleo.api.graph.pojo");
+    return new SessionFactory(configuration, "com.cleo.graph.pojo");
   }
 
   private static String uri() {

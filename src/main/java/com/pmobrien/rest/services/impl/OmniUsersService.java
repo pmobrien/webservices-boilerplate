@@ -1,6 +1,6 @@
 package com.pmobrien.rest.services.impl;
 
-import com.cleo.api.graph.pojo.OmniUser;
+import com.cleo.graph.pojo.OmniUser;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IOmniUsersService;
 import java.util.UUID;
