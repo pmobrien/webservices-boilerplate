@@ -12,11 +12,16 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
 import org.apache.commons.lang3.StringUtils;
 
+@Provider
+@Produces(MediaType.APPLICATION_JSON)
 public class DefaultObjectMapper implements ContextResolver<ObjectMapper> {
-
+  
   @Override
   public ObjectMapper getContext(Class<?> type) {
     return new ObjectMapper()
