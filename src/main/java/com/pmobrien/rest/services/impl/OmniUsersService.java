@@ -4,9 +4,17 @@ import com.cleo.graph.pojo.GraphEntityFactory;
 import com.cleo.graph.pojo.OmniUser;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IOmniUsersService;
+import java.util.Collection;
 import java.util.UUID;
 
 public class OmniUsersService implements IOmniUsersService {
+  
+  @Override
+  public Collection<OmniUser> getAll() {
+    return NeoConnector.getInstance().returningSessionOperation(session -> {
+      return session.loadAll(OmniUser.class);
+    });
+  }
 
   @Override
   public OmniUser get(String uuid) {

@@ -1,6 +1,7 @@
 package com.pmobrien.rest.services;
 
 import com.cleo.graph.pojo.OmniUser;
+import java.util.Collection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,6 +13,10 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/omniusers")
 public interface IOmniUsersService {
+  
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Collection<OmniUser> getAll();
 
   @GET
   @Path("/{id}")
