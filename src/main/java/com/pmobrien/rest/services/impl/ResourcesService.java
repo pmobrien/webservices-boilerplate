@@ -37,6 +37,8 @@ public class ResourcesService implements IResourcesService {
 
   @Override
   public void delete(String uuid) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    NeoConnector.getInstance().sessionOperation(session ->
+        session.delete(session.load(Resource.class, UUID.fromString(uuid)))
+    );
   }
 }
