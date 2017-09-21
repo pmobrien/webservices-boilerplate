@@ -7,6 +7,8 @@ import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IResourcesService;
 import java.util.Collection;
 import java.util.UUID;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 public class ResourcesService implements IResourcesService {
 
@@ -20,7 +22,13 @@ public class ResourcesService implements IResourcesService {
   @Override
   public Resource get(String uuid) {
     return NeoConnector.getInstance().returningSessionOperation(session -> {
-      return session.load(Resource.class, UUID.fromString(uuid));
+      Resource resource = session.load(Resource.class, UUID.fromString(uuid));
+
+      if(resource == null) {
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
+      }
+
+      return resource;
     });
   }
 
