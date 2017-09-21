@@ -1,7 +1,8 @@
 package com.pmobrien.rest.services;
 
-import com.cleo.graph.pojo.OmniUser;
 import com.cleo.graph.pojo.Share;
+import com.cleo.graph.pojo.api.requests.AddShareRequest;
+import com.cleo.graph.pojo.api.responses.AddShareResponse;
 import java.util.Collection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,7 +28,7 @@ public interface ISharesService {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Share post(OmniUser user);
+  public AddShareResponse post(AddShareRequest addShareRequest);
   
   @DELETE
   @Path("/{id}")
