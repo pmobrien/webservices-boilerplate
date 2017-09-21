@@ -5,6 +5,7 @@ import com.cleo.graph.pojo.Resource;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IResourcesService;
 import java.util.Collection;
+import java.util.UUID;
 
 public class ResourcesService implements IResourcesService {
 
@@ -17,7 +18,9 @@ public class ResourcesService implements IResourcesService {
 
   @Override
   public Resource get(String uuid) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    return NeoConnector.getInstance().returningSessionOperation(session -> {
+      return session.load(Resource.class, UUID.fromString(uuid));
+    });
   }
 
   @Override
