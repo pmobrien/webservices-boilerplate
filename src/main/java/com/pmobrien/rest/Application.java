@@ -3,6 +3,7 @@ package com.pmobrien.rest;
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
 import com.pmobrien.rest.services.impl.HelloWorldService;
 import com.pmobrien.rest.services.impl.OmniUsersService;
+import com.pmobrien.rest.services.impl.ResourcesService;
 import com.pmobrien.rest.services.impl.SharesService;
 import java.util.Optional;
 import org.eclipse.jetty.server.Server;
@@ -21,6 +22,7 @@ public class Application {
             new ServletContainer(
                 new ResourceConfig()
                     .register(SharesService.class)
+                    .register(ResourcesService.class)
                     .register(OmniUsersService.class)
                     .register(HelloWorldService.class)
                     .register(DefaultObjectMapper.class)
