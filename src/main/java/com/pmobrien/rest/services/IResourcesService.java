@@ -1,6 +1,8 @@
 package com.pmobrien.rest.services;
 
 import com.cleo.graph.pojo.Resource;
+import com.cleo.graph.pojo.api.requests.ResourcePatch;
+import com.pmobrien.rest.util.PATCH;
 import java.util.Collection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -31,4 +33,8 @@ public interface IResourcesService {
   @DELETE
   @Path("/{id}")
   public void delete(@PathParam("id") String uuid);
+  
+  @PATCH
+  @Path("/{id}")
+  public Resource patch(@PathParam("id") String uuid, ResourcePatch patch);
 }
