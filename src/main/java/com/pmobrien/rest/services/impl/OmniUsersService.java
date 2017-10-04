@@ -2,18 +2,20 @@ package com.pmobrien.rest.services.impl;
 
 import com.cleo.graph.pojo.GraphEntityFactory;
 import com.cleo.graph.pojo.OmniUser;
+import com.cleo.graph.pojo.api.Collection;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IOmniUsersService;
-import java.util.Collection;
 import java.util.UUID;
 
 public class OmniUsersService implements IOmniUsersService {
   
   @Override
   public Collection<OmniUser> getAll() {
-    return NeoConnector.getInstance().returningSessionOperation(session -> {
-      return session.loadAll(OmniUser.class);
-    });
+    return Collection.<OmniUser>of(
+        NeoConnector.getInstance().returningSessionOperation(session -> {
+          return session.loadAll(OmniUser.class);
+        })
+    );
   }
 
   @Override

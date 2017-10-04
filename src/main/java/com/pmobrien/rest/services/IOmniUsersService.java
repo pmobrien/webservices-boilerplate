@@ -1,7 +1,7 @@
 package com.pmobrien.rest.services;
 
 import com.cleo.graph.pojo.OmniUser;
-import java.util.Collection;
+import com.cleo.graph.pojo.api.Collection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
