@@ -2,10 +2,10 @@ package com.pmobrien.rest.services.impl;
 
 import com.cleo.graph.pojo.GraphEntityFactory;
 import com.cleo.graph.pojo.Resource;
+import com.cleo.graph.pojo.api.Collection;
 import com.cleo.graph.pojo.api.requests.ResourcePatch;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IResourcesService;
-import java.util.Collection;
 import java.util.UUID;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -14,9 +14,11 @@ public class ResourcesService implements IResourcesService {
 
   @Override
   public Collection<Resource> getAll() {
-    return NeoConnector.getInstance().returningSessionOperation(session -> {
-      return session.loadAll(Resource.class);
-    });
+    return Collection.<Resource>of(
+        NeoConnector.getInstance().returningSessionOperation(session -> {
+          return session.loadAll(Resource.class);
+        })
+    );
   }
 
   @Override
