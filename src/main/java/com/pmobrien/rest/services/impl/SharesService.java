@@ -4,12 +4,12 @@ import com.cleo.graph.pojo.GraphEntityFactory;
 import com.cleo.graph.pojo.OmniUser;
 import com.cleo.graph.pojo.Resource;
 import com.cleo.graph.pojo.Share;
+import com.cleo.graph.pojo.api.Collection;
 import com.cleo.graph.pojo.api.requests.AddShareRequest;
 import com.cleo.graph.pojo.api.responses.AddShareResponse;
 import com.google.common.collect.Lists;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.ISharesService;
-import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +25,11 @@ public class SharesService implements ISharesService {
   
   @Override
   public Collection<Share> getAll() {
-    return NeoConnector.getInstance().returningSessionOperation(session -> {
-      return session.loadAll(Share.class);
-    });
+    return Collection.<Share>of(
+        NeoConnector.getInstance().returningSessionOperation(session -> {
+          return session.loadAll(Share.class);
+        })
+    );
   }
 
   @Override

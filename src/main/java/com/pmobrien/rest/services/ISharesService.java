@@ -1,9 +1,9 @@
 package com.pmobrien.rest.services;
 
 import com.cleo.graph.pojo.Share;
+import com.cleo.graph.pojo.api.Collection;
 import com.cleo.graph.pojo.api.requests.AddShareRequest;
 import com.cleo.graph.pojo.api.responses.AddShareResponse;
-import java.util.Collection;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
