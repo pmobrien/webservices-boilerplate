@@ -60,6 +60,8 @@ public class SharesService implements ISharesService {
     
     // TODO: should return only shares that were created on this request, not all shares for the Resource.
     return NeoConnector.getInstance().returningSessionOperation(session -> {
+      // MATCH (s:Share)-[PROXY_FOR]->(:Resource { uuid: {resourceId} })
+      // RETURN s
       Filter filter = new Filter("uuid", ComparisonOperator.EQUALS, addShareRequest.getResourceId());
       filter.setNestedPropertyName("resource");
       filter.setNestedPropertyType(Resource.class);
