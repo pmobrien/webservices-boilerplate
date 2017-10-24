@@ -4,6 +4,8 @@ import com.cleo.graph.pojo.GraphEntityFactory;
 import com.cleo.graph.pojo.Resource;
 import com.cleo.graph.pojo.api.Collection;
 import com.cleo.graph.pojo.api.requests.ResourcePatch;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.pmobrien.rest.neo.NeoConnector;
 import com.pmobrien.rest.services.IResourcesService;
 import java.util.UUID;
@@ -13,12 +15,26 @@ import javax.ws.rs.core.Response;
 public class ResourcesService implements IResourcesService {
 
   @Override
-  public Collection<Resource> getAll() {
-    return Collection.<Resource>of(
-        NeoConnector.getInstance().returningSessionOperation(session -> {
-          return session.loadAll(Resource.class);
-        })
-    );
+  public Collection<Resource> getAll(String parentId) {
+    if(parentId == null) {
+      return Collection.of(
+          NeoConnector.getInstance().returningSessionOperation(session -> session.loadAll(Resource.class))
+      );
+    } else {
+      return Collection.of(
+          NeoConnector.getInstance().returningSessionOperation(session ->
+              Lists.newArrayList(
+                  session.query(
+                      Resource.class,
+                      Queries.GET_CHILDREN_BY_PARENT_ID,
+                      ImmutableMap.<String, String>builder()
+                          .put("parentId", UUID.fromString(parentId).toString())
+                          .build()
+                  )
+              )
+          )
+      );
+    }
   }
 
   @Override
@@ -64,5 +80,14 @@ public class ResourcesService implements IResourcesService {
       
       return session.load(Resource.class, UUID.fromString(uuid));
     });
+  }
+  
+  private static class Queries {
+
+    private static final String GET_CHILDREN_BY_PARENT_ID =
+        new StringBuilder()
+            .append("MATCH (child:Resource)<-[PARENT_OF]-(Resource { uuid: {parentId} })").append(System.lineSeparator())
+            .append("RETURN child")
+            .toString();
   }
 }
