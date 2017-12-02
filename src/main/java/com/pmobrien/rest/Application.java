@@ -2,9 +2,6 @@ package com.pmobrien.rest;
 
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
 import com.pmobrien.rest.services.impl.HelloWorldService;
-import com.pmobrien.rest.services.impl.OmniUsersService;
-import com.pmobrien.rest.services.impl.ResourcesService;
-import com.pmobrien.rest.services.impl.SharesService;
 import java.util.Optional;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -17,13 +14,10 @@ public class Application {
   public static void main(String[] args) throws Exception {
     Server server = new Server(port());
     
-    new ServletContextHandler(server, "/graphdb").addServlet(
+    new ServletContextHandler(server, "/api").addServlet(
         new ServletHolder(
             new ServletContainer(
                 new ResourceConfig()
-                    .register(SharesService.class)
-                    .register(ResourcesService.class)
-                    .register(OmniUsersService.class)
                     .register(HelloWorldService.class)
                     .register(DefaultObjectMapper.class)
                     .register(RequestLoggerFilter.class)

@@ -15,7 +15,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         
-        <cleo.version>5.4.2-SNAPSHOT</cleo.version>
         <jersey.version>2.7</jersey.version>
         <jetty.version>9.2.3.v20140905</jetty.version>
         <neo4j.version>3.2.2</neo4j.version>
@@ -62,11 +61,6 @@
             <groupId>org.neo4j</groupId>
             <artifactId>neo4j-ogm-bolt-driver</artifactId>
             <version>${neo4j-ogm.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cleo.base</groupId>
-            <artifactId>GraphPOJO</artifactId>
-            <version>${cleo.version}</version>
         </dependency>
         
         <!-- other -->
