@@ -11,13 +11,13 @@ mvn clean install
 Run it with:
 
 ```
-java -jar target/webservices.jar
+java -jar server/target/webservices.jar
 ```
 
 To run on a port other than 8080:
 
 ```
-java -Dport=<port> -jar target/webservices.jar
+java -Dport=<port> -jar server/target/webservices.jar
 ```
 where `<port>` is your desired port number.
 
