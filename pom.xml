@@ -24,16 +24,15 @@
                 <executions>
                     <execution>
                         <id>copy-resources</id>
-                        <!-- here the phase you need -->
                         <phase>validate</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/extra-resources</outputDirectory>
+                            <outputDirectory>${basedir}/server/src/main/resources/com/pmobrien/rest/webapp</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/non-packaged-resources</directory>
+                                    <directory>${basedir}/client/dist/my-app</directory>
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
@@ -42,6 +41,5 @@
                 </executions>
             </plugin>
         </plugins>
-        ...
     </build>
 </project>
