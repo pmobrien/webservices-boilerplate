@@ -1,1 +1,10 @@
 target/
+client/node_modules/
+client/npm-debug.log
+
+# General IntelliJ exclusions
+**/.idea
+
+
+# Exclusions for webstorm
+*.iml
