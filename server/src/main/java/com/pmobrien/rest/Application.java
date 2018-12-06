@@ -1,8 +1,13 @@
 package com.pmobrien.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
+import com.google.common.io.Resources;
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
 import com.pmobrien.rest.neo.Sessions;
 import com.pmobrien.rest.services.impl.HelloWorldService;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,19 +24,44 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 public class Application {
 
+  private static final String PROPERTIES_FILE = "properties";
   private static final String WEBAPP_RESOURCE_PATH = "/com/pmobrien/rest/webapp";
   private static final String INDEX_HTML_PATH = String.format("%s/index.html", WEBAPP_RESOURCE_PATH);
+  private static final String DEFAULT_PROPERTIES_PATH = "com/pmobrien/rest/conf/properties.json";
+  
+  private static ApplicationProperties properties;
   
   public static void main(String[] args) throws Exception {
     try {
       new Application().run(new Server(port()));
+    } catch(Exception ex) {
+      ex.printStackTrace(System.out);
     } catch(Throwable t) {
       t.printStackTrace(System.out);
     }
   }
   
-  private Application() {
+  private Application() throws Exception {
+    properties = readApplicationProperties();
+    
     Sessions.sessionOperation(session -> {});
+  }
+  
+  private ApplicationProperties readApplicationProperties() throws Exception {
+    if(Strings.isNullOrEmpty(System.getProperty(PROPERTIES_FILE))) {
+      return new ObjectMapper().readValue(
+          Resources.toString(Resources.getResource(DEFAULT_PROPERTIES_PATH), Charsets.UTF_8),
+          ApplicationProperties.class
+      );
+    } else {
+      File file = new File(System.getProperty(PROPERTIES_FILE));
+      
+      if(!file.exists()) {
+        throw new RuntimeException(String.format("Properties file does not exist at '%s'.", file.getPath()));
+      }
+      
+      return new ObjectMapper().readValue(file, ApplicationProperties.class);
+    }
   }
   
   private static int port() {
