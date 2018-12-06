@@ -1,7 +1,12 @@
-server/target/
+# server
+server/neo-store/
 server/src/main/resources/com/pmobrien/rest/webapp/*
+server/target/
+
+# server exceptions
 !server/src/main/resources/com/pmobrien/rest/webapp/.keep
 
+# client
 client/node_modules/
 client/npm-debug.log
 

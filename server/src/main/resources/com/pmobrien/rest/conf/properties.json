@@ -4,7 +4,7 @@
       "port": 15000
     },
     "neo": {
-      "storage": "target/neo-store",
+      "storage": "server/neo-store",
       "boltEnabled": true,
       "boltUri": "0.0.0.0:17666"
     }
