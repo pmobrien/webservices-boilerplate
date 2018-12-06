@@ -47,6 +47,10 @@ public class Application {
     Sessions.sessionOperation(session -> {});
   }
   
+  public static ApplicationProperties getProperties() {
+    return properties;
+  }
+  
   private ApplicationProperties readApplicationProperties() throws Exception {
     if(Strings.isNullOrEmpty(System.getProperty(PROPERTIES_FILE))) {
       return new ObjectMapper().readValue(

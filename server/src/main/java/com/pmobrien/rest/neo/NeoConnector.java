@@ -1,6 +1,8 @@
 package com.pmobrien.rest.neo;
 
+import com.google.common.base.Strings;
 import com.google.common.base.Suppliers;
+import com.pmobrien.rest.Application;
 import java.io.File;
 import java.util.function.Supplier;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -35,9 +37,9 @@ public class NeoConnector {
             new GraphDatabaseFactory()
                 .newEmbeddedDatabaseBuilder(new File(uri()))
                 .setConfig(bolt.type, ConnectorType.BOLT.name())
-                .setConfig(bolt.enabled, "true") //Application.getProperties().getConfiguration().getNeo().isBoltEnabled().toString())
-                .setConfig(bolt.listen_address, "0.0.0.0:17666") //Application.getProperties().getConfiguration().getNeo().getBoltUri())
-                .setConfig(bolt.advertised_address, "0.0.0.0:17666") //Application.getProperties().getConfiguration().getNeo().getBoltUri())
+                .setConfig(bolt.enabled, Application.getProperties().getConfiguration().getNeo().isBoltEnabled().toString())
+                .setConfig(bolt.listen_address, Application.getProperties().getConfiguration().getNeo().getBoltUri())
+                .setConfig(bolt.advertised_address, Application.getProperties().getConfiguration().getNeo().getBoltUri())
                 .setConfig(bolt.encryption_level, BoltConnector.EncryptionLevel.DISABLED.name())
                 .newGraphDatabase()
         ),
@@ -46,10 +48,10 @@ public class NeoConnector {
   }
 
   private static String uri() {
-//    if(Strings.isNullOrEmpty(Application.getProperties().getConfiguration().getNeo().getStorage())) {
-//      throw new RuntimeException("configuration.neo.storage property is required!");
-//    }
+    if(Strings.isNullOrEmpty(Application.getProperties().getConfiguration().getNeo().getStorage())) {
+      throw new RuntimeException("configuration.neo.storage property is required!");
+    }
     
-    return "target/neo-store"; //Application.getProperties().getConfiguration().getNeo().getStorage();
+    return Application.getProperties().getConfiguration().getNeo().getStorage();
   }
 }
