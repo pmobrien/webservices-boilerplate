@@ -12,8 +12,13 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
+import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -33,7 +38,7 @@ public class Application {
   
   public static void main(String[] args) throws Exception {
     try {
-      new Application().run(new Server(port()));
+      new Application().run(new Server());
     } catch(Exception ex) {
       ex.printStackTrace(System.out);
     } catch(Throwable t) {
@@ -75,6 +80,7 @@ public class Application {
   private void run(Server server) {
     try {      
       server.setHandler(configureHandlers());
+      server.addConnector(configureConnector(server));
       
       server.start();
       server.join();
@@ -134,5 +140,22 @@ public class Application {
     handler.addServlet(DefaultServlet.class, "/");
     
     return handler;
+  }
+  
+  private ServerConnector configureConnector(Server server) {
+    HttpConfiguration config = new HttpConfiguration();
+    config.addCustomizer(new SecureRequestCustomizer());
+    config.addCustomizer(new ForwardedRequestCustomizer());
+    
+    HttpConnectionFactory httpConnectionFactory = new HttpConnectionFactory(config);
+    ServerConnector httpConnector = new ServerConnector(server, httpConnectionFactory);
+    httpConnector.setPort(Application.getProperties().getConfiguration().getHttp().getPort());
+    server.addConnector(httpConnector);
+    
+//    if(useHttps()) {
+      // TODO
+//    } else {
+      return new ServerConnector(server, httpConnectionFactory);
+//    }
   }
 }

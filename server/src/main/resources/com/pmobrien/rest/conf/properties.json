@@ -1,5 +1,8 @@
 {
   "configuration": {
+    "http": {
+      "port": 15000
+    },
     "neo": {
       "storage": "target/neo-store",
       "boltEnabled": true,

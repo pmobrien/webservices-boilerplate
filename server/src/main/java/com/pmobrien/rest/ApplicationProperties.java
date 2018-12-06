@@ -19,9 +19,18 @@ public class ApplicationProperties {
   
   public static class Configuration {
     
+    private Http http;
     private Neo neo;
     
     public Configuration() {}
+
+    public Http getHttp() {
+      return http;
+    }
+
+    public void setHttp(Http http) {
+      this.http = http;
+    }
 
     public Neo getNeo() {
       return neo;
@@ -29,6 +38,21 @@ public class ApplicationProperties {
 
     public void setNeo(Neo neo) {
       this.neo = neo;
+    }
+    
+    public static class Http {
+      
+      private Integer port;
+      
+      public Http() {}
+
+      public Integer getPort() {
+        return port;
+      }
+
+      public void setPort(Integer port) {
+        this.port = port;
+      }
     }
     
     public static class Neo {
