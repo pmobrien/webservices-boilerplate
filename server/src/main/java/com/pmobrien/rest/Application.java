@@ -1,6 +1,7 @@
 package com.pmobrien.rest;
 
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
+import com.pmobrien.rest.neo.Sessions;
 import com.pmobrien.rest.services.impl.HelloWorldService;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -27,6 +28,10 @@ public class Application {
     } catch(Throwable t) {
       t.printStackTrace(System.out);
     }
+  }
+  
+  private Application() {
+    Sessions.sessionOperation(session -> {});
   }
   
   private static int port() {
