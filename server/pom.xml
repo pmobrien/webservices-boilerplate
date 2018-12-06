@@ -24,6 +24,9 @@
 
         <jersey.version>2.7</jersey.version>
         <jetty.version>9.2.3.v20140905</jetty.version>
+        
+        <neo4j.version>3.3.0</neo4j.version>
+        <neo4j-ogm.version>3.0.2</neo4j-ogm.version>
     </properties>
 
     <dependencies>
@@ -54,6 +57,33 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
+        </dependency>
+        
+        <!-- neo4j -->
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j</artifactId>
+            <version>${neo4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-core</artifactId>
+            <version>${neo4j-ogm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-embedded-driver</artifactId>
+            <version>${neo4j-ogm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-ogm-bolt-driver</artifactId>
+            <version>${neo4j-ogm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-bolt</artifactId>
+            <version>${neo4j.version}</version>
         </dependency>
 
         <!-- other -->
