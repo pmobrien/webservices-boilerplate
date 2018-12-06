@@ -1,0 +1,12 @@
+{
+  "configuration": {
+    "http": {
+      "port": 15000
+    },
+    "neo": {
+      "storage": "target/neo-store",
+      "boltEnabled": true,
+      "boltUri": "0.0.0.0:17666"
+    }
+  }
+}
