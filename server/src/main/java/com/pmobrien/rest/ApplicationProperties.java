@@ -20,6 +20,7 @@ public class ApplicationProperties {
   public static class Configuration {
     
     private Http http;
+    private Https https;
     private Neo neo;
     
     public Configuration() {}
@@ -30,6 +31,14 @@ public class ApplicationProperties {
 
     public void setHttp(Http http) {
       this.http = http;
+    }
+
+    public Https getHttps() {
+      return https;
+    }
+
+    public void setHttps(Https https) {
+      this.https = https;
     }
 
     public Neo getNeo() {
@@ -52,6 +61,46 @@ public class ApplicationProperties {
 
       public void setPort(Integer port) {
         this.port = port;
+      }
+    }
+    
+    public static class Https {
+      
+      private Boolean enabled;
+      private Integer port;
+      private String keyStorePath;
+      private String keyStorePassword;
+
+      public Boolean isEnabled() {
+        return enabled;
+      }
+
+      public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+      }
+
+      public Integer getPort() {
+        return port;
+      }
+
+      public void setPort(Integer port) {
+        this.port = port;
+      }
+
+      public String getKeyStorePath() {
+        return keyStorePath;
+      }
+
+      public void setKeyStorePath(String keyStorePath) {
+        this.keyStorePath = keyStorePath;
+      }
+
+      public String getKeyStorePassword() {
+        return keyStorePassword;
+      }
+
+      public void setKeyStorePassword(String keyStorePassword) {
+        this.keyStorePassword = keyStorePassword;
       }
     }
     

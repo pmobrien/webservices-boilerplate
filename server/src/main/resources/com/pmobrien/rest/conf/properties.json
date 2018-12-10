@@ -3,6 +3,12 @@
     "http": {
       "port": 15000
     },
+    "https": {
+      "enabled": false,
+      "port": 443,
+      "keyStorePath": "",
+      "keyStorePassword": ""
+    },
     "neo": {
       "storage": "server/neo-store",
       "boltEnabled": true,

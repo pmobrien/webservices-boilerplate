@@ -24,6 +24,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -71,10 +72,6 @@ public class Application {
       
       return new ObjectMapper().readValue(file, ApplicationProperties.class);
     }
-  }
-  
-  private static int port() {
-    return Integer.parseInt(Optional.ofNullable(System.getProperty("port")).orElse("8080"));
   }
   
   private void run(Server server) {
@@ -152,10 +149,21 @@ public class Application {
     httpConnector.setPort(Application.getProperties().getConfiguration().getHttp().getPort());
     server.addConnector(httpConnector);
     
-//    if(useHttps()) {
-      // TODO
-//    } else {
+    if(Application.properties.getConfiguration().getHttps().isEnabled()) {
+      // TODO: check https properties
+
+      SslContextFactory sslContextFactory = new SslContextFactory();
+      sslContextFactory.setKeyStoreType("PKCS12");
+      sslContextFactory.setKeyStorePath(Application.properties.getConfiguration().getHttps().getKeyStorePath());
+      sslContextFactory.setKeyStorePassword(Application.properties.getConfiguration().getHttps().getKeyStorePassword());
+      sslContextFactory.setKeyManagerPassword(Application.properties.getConfiguration().getHttps().getKeyStorePassword());
+      
+      ServerConnector connector = new ServerConnector(server, sslContextFactory, httpConnectionFactory);
+      connector.setPort(Application.properties.getConfiguration().getHttps().getPort());
+      
+      return connector;
+    } else {
       return new ServerConnector(server, httpConnectionFactory);
-//    }
+    }
   }
 }
