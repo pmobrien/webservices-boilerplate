@@ -1,28 +1,29 @@
-A simple project that contains just enough code to spin up an embedded Jetty web server on port 8080, with a base resource path of `/api`.
+A simple project that, when built, produces a jar containing a servlet (Jetty) that hosts a web page and a REST API, as well as an embedded database (Neo4j).
 
-<br>
+## Requirements to build:
+* [Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
+* [Maven](https://maven.apache.org/)
+* [Angular CLI](https://cli.angular.io/)
 
-Build the project with:
+## To build:
+From the base of the project, everything can be build simply by running:
 
 ```
-mvn clean install
+mvn
 ```
 
-Run it with:
+### What it's doing:
+The project will first compile the Angular project in the `client/` directory and place the output inside the proper directory in the `server/` project. The `server/` Java project is then built and everything is bundled into the `server/target/webservices.jar` file.
+
+## To run the project:
+From the base of the project, run:
 
 ```
 java -jar server/target/webservices.jar
 ```
 
-To run on a port other than 8080:
+For easy copy/paste; to build and run in one step:
 
 ```
-java -Dport=<port> -jar server/target/webservices.jar
+mvn && java -jar server/target/webservices.jar
 ```
-where `<port>` is your desired port number.
-
-<br>
-
-Contains one resource out of the box: `/hello-world`. This can be quickly tested by using any REST client ([Postman](https://www.getpostman.com/) works well) and sending a `GET` to `http://localhost:8080/api/hello-world`. You should receive back a plaintext response of `Hello World`.
-
-Additional resources can be added by chaining on a `.register(...)` call to the `ResourceConfig` in the `Application` class.
