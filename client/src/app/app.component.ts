@@ -8,14 +8,19 @@ import { Observable } from 'rxjs/index';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-app';
+  title = 'hello-world';
   data: string = '';
 
   constructor(private http: HttpClient) {
-    this.getApiData().subscribe(result => this.data = result);
+    this.getApiData().subscribe(result => this.data = result.hello + ' ' + result.world);
   }
 
-  getApiData(): Observable<any> {
-    return this.http.get('/api/hello-world', {responseType: 'text'});
+  getApiData(): Observable<HelloWorld> {
+    return this.http.get<HelloWorld>('/api/hello-world');
   }
+}
+
+export interface HelloWorld {
+  hello: string;
+  world: string;
 }
