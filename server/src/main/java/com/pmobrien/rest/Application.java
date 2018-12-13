@@ -2,7 +2,9 @@ package com.pmobrien.rest;
 
 import com.google.common.base.Strings;
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
+import com.pmobrien.rest.mappers.DefaultObjectMapper;
 import com.pmobrien.rest.neo.Sessions;
+import com.pmobrien.rest.neo.pojo.HelloWorld;
 import com.pmobrien.rest.services.impl.HelloWorldService;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -41,7 +43,7 @@ public class Application {
   }
   
   private Application() throws Exception {
-    Sessions.sessionOperation(session -> {});
+    Sessions.sessionOperation(session -> session.save(new HelloWorld()));
   }
   
   public static ApplicationProperties getProperties() {
@@ -83,6 +85,7 @@ public class Application {
             new ServletContainer(
                 new ResourceConfig()
                     .register(HelloWorldService.class)
+                    .register(DefaultObjectMapper.class)
                     .register(UncaughtExceptionMapper.class)
             )
         ),

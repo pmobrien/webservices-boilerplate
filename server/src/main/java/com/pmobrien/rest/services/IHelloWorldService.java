@@ -10,6 +10,6 @@ import javax.ws.rs.core.Response;
 public interface IHelloWorldService {
 
   @GET
-  @Produces(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
   public Response helloWorld();
 }
