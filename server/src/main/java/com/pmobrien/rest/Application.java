@@ -1,13 +1,9 @@
 package com.pmobrien.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
-import com.google.common.io.Resources;
 import com.pmobrien.rest.exceptions.UncaughtExceptionMapper;
 import com.pmobrien.rest.neo.Sessions;
 import com.pmobrien.rest.services.impl.HelloWorldService;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,13 +24,11 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 public class Application {
-
-  private static final String PROPERTIES_FILE = "properties";
+  
   private static final String WEBAPP_RESOURCE_PATH = "/com/pmobrien/rest/webapp";
   private static final String INDEX_HTML_PATH = String.format("%s/index.html", WEBAPP_RESOURCE_PATH);
-  private static final String DEFAULT_PROPERTIES_PATH = "com/pmobrien/rest/conf/properties.json";
   
-  private static ApplicationProperties properties;
+  private static final ApplicationProperties PROPERTIES = ApplicationProperties.load();
   
   public static void main(String[] args) throws Exception {
     try {
@@ -47,30 +41,11 @@ public class Application {
   }
   
   private Application() throws Exception {
-    properties = readApplicationProperties();
-    
     Sessions.sessionOperation(session -> {});
   }
   
   public static ApplicationProperties getProperties() {
-    return properties;
-  }
-  
-  private ApplicationProperties readApplicationProperties() throws Exception {
-    if(Strings.isNullOrEmpty(System.getProperty(PROPERTIES_FILE))) {
-      return new ObjectMapper().readValue(
-          Resources.toString(Resources.getResource(DEFAULT_PROPERTIES_PATH), Charsets.UTF_8),
-          ApplicationProperties.class
-      );
-    } else {
-      File file = new File(System.getProperty(PROPERTIES_FILE));
-      
-      if(!file.exists()) {
-        throw new RuntimeException(String.format("Properties file does not exist at '%s'.", file.getPath()));
-      }
-      
-      return new ObjectMapper().readValue(file, ApplicationProperties.class);
-    }
+    return PROPERTIES;
   }
   
   private void run(Server server) {
@@ -148,21 +123,21 @@ public class Application {
     httpConnector.setPort(Application.getProperties().getConfiguration().getHttp().getPort());
     server.addConnector(httpConnector);
     
-    if(Application.properties.getConfiguration().getHttps().isEnabled()) {
-      if(Application.properties.getConfiguration().getHttps().getPort() == null
-          || Strings.isNullOrEmpty(Application.properties.getConfiguration().getHttps().getKeyStorePath())
-          || Strings.isNullOrEmpty(Application.properties.getConfiguration().getHttps().getKeyStorePassword())) {
+    if(Application.PROPERTIES.getConfiguration().getHttps().isEnabled()) {
+      if(Application.PROPERTIES.getConfiguration().getHttps().getPort() == null
+          || Strings.isNullOrEmpty(Application.PROPERTIES.getConfiguration().getHttps().getKeyStorePath())
+          || Strings.isNullOrEmpty(Application.PROPERTIES.getConfiguration().getHttps().getKeyStorePassword())) {
         throw new RuntimeException("https.port, https.keyStorePath, and https.keyStorePassword are all required for https.");
       }
 
       SslContextFactory sslContextFactory = new SslContextFactory();
       sslContextFactory.setKeyStoreType("PKCS12");
-      sslContextFactory.setKeyStorePath(Application.properties.getConfiguration().getHttps().getKeyStorePath());
-      sslContextFactory.setKeyStorePassword(Application.properties.getConfiguration().getHttps().getKeyStorePassword());
-      sslContextFactory.setKeyManagerPassword(Application.properties.getConfiguration().getHttps().getKeyStorePassword());
+      sslContextFactory.setKeyStorePath(Application.PROPERTIES.getConfiguration().getHttps().getKeyStorePath());
+      sslContextFactory.setKeyStorePassword(Application.PROPERTIES.getConfiguration().getHttps().getKeyStorePassword());
+      sslContextFactory.setKeyManagerPassword(Application.PROPERTIES.getConfiguration().getHttps().getKeyStorePassword());
       
       ServerConnector connector = new ServerConnector(server, sslContextFactory, httpConnectionFactory);
-      connector.setPort(Application.properties.getConfiguration().getHttps().getPort());
+      connector.setPort(Application.PROPERTIES.getConfiguration().getHttps().getPort());
       
       return connector;
     } else {

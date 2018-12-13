@@ -1,9 +1,18 @@
 package com.pmobrien.rest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
+import com.google.common.io.Resources;
+import java.io.File;
+import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApplicationProperties {
+  
+  private static final String SYSTEM_PROPERTY = "properties";
+  private static final String DEFAULT_PATH = "com/pmobrien/rest/conf/properties.json";
 
   private Configuration configuration;
   
@@ -135,6 +144,27 @@ public class ApplicationProperties {
       public void setBoltUri(String boltUri) {
         this.boltUri = boltUri;
       }
+    }
+  }
+  
+  public static ApplicationProperties load() {
+    try {
+      if(Strings.isNullOrEmpty(System.getProperty(SYSTEM_PROPERTY))) {
+        return new ObjectMapper().readValue(
+            Resources.toString(Resources.getResource(DEFAULT_PATH), Charsets.UTF_8),
+            ApplicationProperties.class
+        );
+      } else {
+        File file = new File(System.getProperty(SYSTEM_PROPERTY));
+
+        if(!file.exists()) {
+          throw new RuntimeException(String.format("Properties file does not exist at '%s'.", file.getPath()));
+        }
+
+        return new ObjectMapper().readValue(file, ApplicationProperties.class);
+      }
+    } catch(IOException ex) {
+      throw new RuntimeException(ex);
     }
   }
 }
