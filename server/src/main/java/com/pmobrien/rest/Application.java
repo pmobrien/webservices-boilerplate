@@ -11,7 +11,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Optional;
 import org.eclipse.jetty.server.ForwardedRequestCustomizer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HttpConfiguration;
@@ -150,7 +149,11 @@ public class Application {
     server.addConnector(httpConnector);
     
     if(Application.properties.getConfiguration().getHttps().isEnabled()) {
-      // TODO: check https properties
+      if(Application.properties.getConfiguration().getHttps().getPort() == null
+          || Strings.isNullOrEmpty(Application.properties.getConfiguration().getHttps().getKeyStorePath())
+          || Strings.isNullOrEmpty(Application.properties.getConfiguration().getHttps().getKeyStorePassword())) {
+        throw new RuntimeException("https.port, https.keyStorePath, and https.keyStorePassword are all required for https.");
+      }
 
       SslContextFactory sslContextFactory = new SslContextFactory();
       sslContextFactory.setKeyStoreType("PKCS12");
