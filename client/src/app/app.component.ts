@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/index';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +10,7 @@ export class AppComponent {
   title = 'hello-world';
   data: string = '';
 
-  constructor(private http: HttpClient) {
-    this.getApiData().subscribe(result => this.data = result.hello + ' ' + result.world);
+  constructor(private service: AppService) {
+    service.getHelloWorld().subscribe(result => this.data = result.hello + ' ' + result.world);
   }
-
-  getApiData(): Observable<HelloWorld> {
-    return this.http.get<HelloWorld>('/api/hello-world');
-  }
-}
-
-export interface HelloWorld {
-  hello: string;
-  world: string;
 }
