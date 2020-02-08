@@ -13,17 +13,17 @@ mvn
 ```
 
 ### What it's doing:
-The project will first compile the Angular project in the `client/` directory and place the output inside the proper directory in the `server/` project. The `server/` Java project is then built and everything is bundled into the `server/target/webservices.jar` file.
+The project will first compile the Angular project in the `client/` directory and place the output inside the proper directory in the `server/` project. The `server/` Java project is then built and everything is bundled into the `server/target/webserver.jar` file.
 
 ## To run the project:
 From the base of the project, run:
 
 ```
-java -jar server/target/webservices.jar
+java -jar server/target/webserver.jar
 ```
 
 For easy copy/paste; to build and run in one step:
 
 ```
-mvn && java -jar server/target/webservices.jar
+mvn && java -jar server/target/webserver.jar
 ```
